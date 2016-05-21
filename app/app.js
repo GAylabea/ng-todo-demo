@@ -6,12 +6,11 @@ app.controller("NavCtrl", function($scope){
 })
 
 // now a controller - we put the name of the controller (traditionally with Ctrl) and add a function with scope 
-  // don't forget to pu the name of the controller inside the index file
+  // don't forget to put the name of the controller inside the index file
 app.controller("TodoCtrl", function($scope) {
   $scope.welcome = "hello";
-  $scope.showListView = false;
-  $scope.newTask = {} ; 
-
+  $scope.showListView = true;
+  $scope.newTask = {};
   $scope.items = [
   {
     id: 0,
@@ -21,7 +20,7 @@ app.controller("TodoCtrl", function($scope) {
     assignedTo: "greg",
     location: "Zoe's house",
     urgency: "low",
-    dependencies: ["sunshine", "clippers", "hat", "water", "headphones"]
+    dependencies: "sunshine, clippers, hat, water, headphones"
   },
   {
     id: 1,
@@ -31,7 +30,7 @@ app.controller("TodoCtrl", function($scope) {
     assignedTo: "Joe",
     location: "NSS",
     urgency: "high",
-    dependencies: ["wifi", "tissue", "vodka"]
+    dependencies: "wifi, tissue, vodka"
   },
   {
     id: 2,
@@ -41,17 +40,26 @@ app.controller("TodoCtrl", function($scope) {
     assignedTo: "Zoe",
     location: "Zoe's house",
     urgency: "medium",
-    dependencies: ["hammock", "cat", "hat", "pillow", "blankey"]
+    dependencies: "hammock, cat, hat, pillow, blankey"
   }
-  ]
+];
 
-  $scope.newItem = function(){
+$scope.newItem = function(){
     console.log("you clicked new item"); 
     $scope.showListView = false;
-  }
-  $scope.allItem = function(){
+  };
+
+$scope.allItem = function(){
     console.log("you clicked all item");
     $scope.showListView = true;
-  }
+  };
+
+$scope.addNewItem = function() {
+  $scope.newTask.isCompleted = false; 
+  $scope.newTask.id = $scope.items.length; 
+  console.log("you added new item", $scope.newTask);
+  $scope.items.push($scope.newTask);  
+  $scope.newTask = ""; 
+}
 
 })

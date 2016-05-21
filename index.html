@@ -3,6 +3,7 @@
 <head>
     <title>Todo</title>
     <link rel="stylesheet" type="text/css" href="lib/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <!-- Here is the app name:  -->
@@ -46,6 +47,30 @@
         <div class="col-xs-10 col-xs-offset-1 main-container">
           <div class="col-xs-12" ng-show="showListView">
             <h1>Todo List</h1>
+              <div class="row">
+                <div class="col-xs-6 col-xs-offset-3">
+                  <div class="input-group">
+                      <span class="input-group-btn">
+                      <button class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </span>
+                    <input type="text" placeholder="Search for:" class="form-control" ng-model="searchText">
+                  </div>
+                </div>
+              </div>
+            <!-- this is a forEach loop - we want to loop over each one of the "thingy"'s and the result will be "items" it is looping
+            over the array of showListView -->
+              <div ng-repeat="thingy in items | filter: searchText">
+                  <div class="panel panel-default">
+                    <div class="panel-body"> 
+                      <div class="col-xs-1"><input type="checkbox" name=""/></div>
+                      <div class="col-xs-7">{{thingy.task}}</div>
+                      <div class="col-xs-2">{{thingy.dueDate}}</div>
+                      <div class="col-xs-1">{{thingy.assignedTo}}</div>
+                      <div class="col-xs-1"><button class="btn btn-danger">X</button></div>
+                    </div>
+                  </div>
+              </div>
+
           </div>
           <div class="col-xs-12" ng-show="!showListView">
             <h1>New Todo</h1>
@@ -74,6 +99,7 @@
                   <label>Equipment Necessary</label>
                   <input type="text"class="form-control" placeholder="Equipment" ng-model="newTask.dependencies"/>
                 </div>
+                <button class="btn btn-defualt" ng-click="addNewItem()">Submit</button>
               </form>
           </div>
         </div>
