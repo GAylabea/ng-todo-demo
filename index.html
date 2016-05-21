@@ -33,8 +33,62 @@
 
 <!-- Here is the controller name: -->
     <div ng-controller="TodoCtrl">
-      <h1>Todo List</h1>
+        <!-- here we will make buttons - one to add new items, the other to list all. We are putting the functions inside the buttons!!
+        we also are calling them with the ()'s-->
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+          <button class="col-xs-6 btn btn-success" ng-click="newItem()">New Item</button>
+          <button class="col-xs-6 btn btn-info" ng-click="allItem()">All Items</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 main-container">
+          <div class="col-xs-12" ng-show="showListView">
+            <h1>Todo List</h1>
+          </div>
+          <div class="col-xs-12" ng-show="!showListView">
+            <h1>New Todo</h1>
+              <form>
+                <div class="form-group">
+                  <label>Task Description</label>
+                  <input type="text"class="form-control" placeholder="Some important task" ng-model="newTask.task"/>
+                </div>
+                <div class="form-group">
+                  <label>Due Date</label>
+                  <input type="text"class="form-control" placeholder="Due Date" ng-model="newTask.dueDate"/>
+                </div>
+                <div class="form-group">
+                  <label>Assigned To</label>
+                  <input type="text"class="form-control" placeholder="Assigned To" ng-model="newTask.assignedTo"/>
+                </div>
+                <div class="form-group">
+                  <label>Location</label>
+                  <input type="text"class="form-control" placeholder="Location" ng-model="newTask.location"/>
+                </div>
+                <div class="form-group">
+                  <label>Urgency</label>
+                  <input type="text"class="form-control" placeholder="Urgency" ng-model="newTask.urgency"/>
+                </div>
+                <div class="form-group">
+                  <label>Equipment Necessary</label>
+                  <input type="text"class="form-control" placeholder="Equipment" ng-model="newTask.dependencies"/>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    
     </div>
+
+   <!-- id: 2,
+    task: "take a nap",
+    isCompleted: false,
+    dueDate: "12/5/17",
+    assignedTo: "Zoe",
+    location: "Zoe's house",
+    urgency: "medium",
+    dependencies: ["hammock", "cat", "hat", "pillow", "blankey"] -->
 
 <script type="test/javascript" src="lib/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="test/javascript" src="lib/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
