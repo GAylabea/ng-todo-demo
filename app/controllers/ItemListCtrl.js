@@ -1,35 +1,8 @@
-app.controller("ItemListCtrl", function($scope) {
-  $scope.items = [
-  {
-    id: 0,
-    task: "mow the lawn",
-    isCompleted: true,
-    dueDate: "12/5/17",
-    assignedTo: "greg",
-    location: "Zoe's house",
-    urgency: "low",
-    dependencies: "sunshine, clippers, hat, water, headphones"
-  },
-  {
-    id: 1,
-    task: "grade quizzes",
-    isCompleted: false,
-    dueDate: "12/5/17",
-    assignedTo: "Joe",
-    location: "NSS",
-    urgency: "high",
-    dependencies: "wifi, tissue, vodka"
-  },
-  {
-    id: 2,
-    task: "take a nap",
-    isCompleted: false,
-    dueDate: "12/5/17",
-    assignedTo: "Zoe",
-    location: "Zoe's house",
-    urgency: "medium",
-    dependencies: "hammock, cat, hat, pillow, blankey"
-    }
-  ];
-
+app.controller("ItemListCtrl", function($scope, $http) {
+    $scope.items = []; 
+    // this is a GET request - similar to Ajax - note that we are connecting stuff from the index file which is at the root - so we don't need two dots
+    $http.get("./data/items.json")
+      .success(function(itemObject){
+        console.log("ItemObject", itemObject);
+      })
 });

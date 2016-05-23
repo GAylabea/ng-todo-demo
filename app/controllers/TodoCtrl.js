@@ -1,5 +1,6 @@
 // now a controller - we put the name of the controller (traditionally with Ctrl) and add a function with scope 
   // don't forget to put the name of the controller inside the index file
+  // we don't need this anymore because we broke it up into 3 seperate controller files. 
 app.controller("TodoCtrl", function($scope) {
   $scope.welcome = "hello";
   $scope.showListView = true;
