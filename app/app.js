@@ -1,65 +1,22 @@
 // we are adding the angular app - and in the parens, are the name of the app and empty brackets
-var app = angular.module("TodoApp", []); 
+// also, on the lines with when(items/:ect) you can add anything with the colon
+var app = angular.module("TodoApp", ["ngRoute"]);
 
-app.controller("NavCtrl", function($scope){
-  $scope.navItems = [{name: "Logout"}, {name: "All Item"}, {name: "New Item"}]
-})
-
-// now a controller - we put the name of the controller (traditionally with Ctrl) and add a function with scope 
-  // don't forget to put the name of the controller inside the index file
-app.controller("TodoCtrl", function($scope) {
-  $scope.welcome = "hello";
-  $scope.showListView = true;
-  $scope.newTask = {};
-  $scope.items = [
-  {
-    id: 0,
-    task: "mow the lawn",
-    isCompleted: true,
-    dueDate: "12/5/17",
-    assignedTo: "greg",
-    location: "Zoe's house",
-    urgency: "low",
-    dependencies: "sunshine, clippers, hat, water, headphones"
-  },
-  {
-    id: 1,
-    task: "grade quizzes",
-    isCompleted: false,
-    dueDate: "12/5/17",
-    assignedTo: "Joe",
-    location: "NSS",
-    urgency: "high",
-    dependencies: "wifi, tissue, vodka"
-  },
-  {
-    id: 2,
-    task: "take a nap",
-    isCompleted: false,
-    dueDate: "12/5/17",
-    assignedTo: "Zoe",
-    location: "Zoe's house",
-    urgency: "medium",
-    dependencies: "hammock, cat, hat, pillow, blankey"
-  }
-];
-
-$scope.newItem = function(){
-    console.log("you clicked new item"); 
-    $scope.showListView = false;
-  };
-
-$scope.allItem = function(){
-    console.log("you clicked all item");
-    $scope.showListView = true;
-  };
-
-$scope.addNewItem = function() {
-  $scope.newTask.isCompleted = false; 
-  $scope.newTask.id = $scope.items.length; 
-  console.log("you added new item", $scope.newTask);
-  $scope.items.push($scope.newTask);  
-  $scope.newTask = ""; 
-}
-
-})
+// each of these within the config is an IIFE - it is NOT global BUT the whole app.config is 
+// and sets the stage for everything working togther. 
+app.config(function($routeProvider) {
+    $routeProvider.
+        when("/items/list",{
+            templateUrl: "partials/item-list.html",
+            controller: "ItemListCtrl"
+        }).
+        when("/items/new", {
+            templateUrl: "partials/item-new.html",
+            controller: "ItemNewCtrl"
+        }).
+        when("/items/:itemId", {
+            templateUrl: "partials/item-details.html",
+            controller: "ItemViewCtrl"
+        }).
+        otherwise("items/list");
+});
