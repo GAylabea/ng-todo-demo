@@ -1,6 +1,7 @@
 // we are adding the angular app - and in the parens, are the name of the app and empty brackets
 // also, on the lines with when(items/:ect) you can add anything with the colon
-var app = angular.module("TodoApp", ["ngRoute"]);
+var app = angular.module("TodoApp", ["ngRoute"])
+    .constant("firebaseURL", "https://todolistnss.firebaseio.com/");
 
 // each of these within the config is an IIFE - it is NOT global BUT the whole app.config is 
 // and sets the stage for everything working togther. 

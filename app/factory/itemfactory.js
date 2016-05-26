@@ -2,12 +2,12 @@
 // the $q activates the promises - we use a promise because we want JS to keep working - even before the info is available to it
 // we can call this in any controller - they will have access by the words "itemStorage" passed in - since they are returned
 // at the bottom - also, it is named .factory (an angular thing)
-'use strict';
-app.factory("itemStorage", function($q, $http) {
+
+app.factory("itemStorage", function($q, $http, firebaseURL) {
     var getItemList = function() {
         var items = [];
         return $q(function(resolve, reject) {
-            $http.get("https://todolistnss.firebaseio.com/items.json")
+            $http.get(firebaseURL + "items.json")
                 .success(function(itemObject) {
                     var itemCollection = itemObject;
                     Object.keys(itemCollection).forEach(function(key) {
@@ -26,7 +26,7 @@ app.factory("itemStorage", function($q, $http) {
     var deleteItem = function(itemId) {
         return $q(function(resolve, reject) {
             $http
-                .delete(`https://todolistnss.firebaseio.com/items/${itemId}.json`)
+                .delete(firebaseURL + "items/" + itemId + ".json")
                 .success(function(objectFromFirebase) {
                     resolve(objectFromFirebase)
                 });
@@ -36,7 +36,7 @@ app.factory("itemStorage", function($q, $http) {
 var postNewItem = function(newItem) {
     return $q(function(resolve, reject) {
         $http.post(
-                "https://todolistnss.firebaseio.com/items/.json",
+                firebaseURL + "items.json",
                 JSON.stringify({
                     assignedTo: newItem.assignedTo,
                     dependencies: newItem.dependencies,
