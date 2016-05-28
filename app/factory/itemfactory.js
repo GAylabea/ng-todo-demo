@@ -2,13 +2,12 @@
 // the $q activates the promises - we use a promise because we want JS to keep working - even before the info is available to it
 // we can call this in any controller - they will have access by the words "itemStorage" passed in - since they are returned
 // at the bottom - also, it is named .factory (an angular thing)
-'use strict';
-app.factory("itemStorage", function($q, $http) {
 
+app.factory("itemStorage", function($q, $http, firebaseURL) {
     var getItemList = function() {
         var items = [];
         return $q(function(resolve, reject) {
-            $http.get("https://todolistnss.firebaseio.com/items.json")
+            $http.get(firebaseURL + "items.json")
                 .success(function(itemObject) {
                     var itemCollection = itemObject;
                     Object.keys(itemCollection).forEach(function(key) {
@@ -22,20 +21,22 @@ app.factory("itemStorage", function($q, $http) {
                 });
         })
     }
+    // the itemId is from the itemListCtrl and it is also in the item-list.html in itemDelete ng-click (thingy.id) 
+    // AND item-list-html with the delete button which has a ng-click called itemId
     var deleteItem = function(itemId) {
         return $q(function(resolve, reject) {
             $http
-                .delete(`https://todolistnss.firebaseio.com/items/${itemId}.json`)
+                .delete(firebaseURL + "items/" + itemId + ".json")
                 .success(function(objectFromFirebase) {
                     resolve(objectFromFirebase)
-                })
-        })
-}
-
+                });
+        });
+};
+// we are passing newItem thru this function  - note how similar all three are. They each call $http, then post, delete or get
 var postNewItem = function(newItem) {
     return $q(function(resolve, reject) {
         $http.post(
-                "https://todolistnss.firebaseio.com/items/.json",
+                firebaseURL + "items.json",
                 JSON.stringify({
                     assignedTo: newItem.assignedTo,
                     dependencies: newItem.dependencies,
@@ -49,11 +50,12 @@ var postNewItem = function(newItem) {
             .success(
                 function(objectFromFirebase) {
                     resolve(objectFromFirebase);
+// remember - resolve is a promise-word - it's giving back the data; it says the promise is completed
                 }
             );
     });
-}
-
+};
+// All three of the methods need to be returned here: 
 return {getItemList: getItemList, deleteItem: deleteItem, postNewItem: postNewItem}
 
-})
+});

@@ -1,15 +1,15 @@
 app.controller("ItemListCtrl", function($scope, $http, $location, itemStorage) {
     $scope.items = []; 
 // this is being called immediately - w/in the controller - it will call all the stuff from Firebase and make it ava to the DOM
-// we are saving time and space by doing this factory just once - remember itemStorage? we are passing it thru above
+// we are saving time and space by doing this factory just once - remember itemStorage? we are passing it thru this controller 
 // / - so no getter is needed (note the old jquery code below)
     itemStorage.getItemList().then(function(itemCollection){
       console.log("itemCollection from Promise", itemCollection);
       $scope.items = itemCollection;
     })
 
-// this one is being called by a button IN the html - so, it needs the $scope so it can be accessible to html. this is how 
-// we do event handling (it's attached to the delete button in the html file
+// this one is being called by a button in the html - so, it needs the $scope so it can be accessible to html. this is how 
+// we do event handling (it's attached to the delete button in the html file)
   // also, whenever you can attach a .then - response is success of info loading
       $scope.itemDelete = function(itemId){
         console.log("itemId", itemId);
