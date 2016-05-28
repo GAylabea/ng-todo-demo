@@ -16,10 +16,16 @@ app.controller("ItemListCtrl", function($scope, $http, $location, itemStorage) {
         itemStorage.deleteItem(itemId).then(function(response){
           itemStorage.getItemList().then(function(itemCollection){
             $scope.items = itemCollection;
-          })
+          });
+        });
+      };
+      $scope.inputChange = function(item) {
+        itemStorage.updateCompletedStatus(item)
+        .then(function(response){
+            console.log(response);
         })
-      }
-  });
+      } 
+   })   
 
 
     // this is a GET request - similar to Ajax - note that we are connecting stuff from the index file which is at the root - 

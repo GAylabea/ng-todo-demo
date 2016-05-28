@@ -42,7 +42,7 @@ var postNewItem = function(newItem) {
                     dependencies: newItem.dependencies,
                     dueDate: newItem.dueDate,
                     isCompleted: newItem.isCompleted,
-                    location: newItem.task,
+                    location: newItem.location,
                     task: newItem.task,
                     urgency: newItem.urgency
                 })
@@ -55,7 +55,60 @@ var postNewItem = function(newItem) {
             );
     });
 };
-// All three of the methods need to be returned here: 
-return {getItemList: getItemList, deleteItem: deleteItem, postNewItem: postNewItem}
+var getSingleItem = function(itemId){
+    return $q(function(resolve, reject) {
+            $http.get(firebaseURL + "items/" + itemId + ".json")
+                .success(function(itemObject) {
+                    resolve(itemObject)
+                    })
+                .error(function(error) {
+                    reject(error);
+                })
+          });
+}
+var updateItem = function(itemId, newItem) {
+        return $q(function(resolve, reject) {
+            $http.put(
+                firebaseURL + "items/" + itemId + ".json",
+                JSON.stringify({
+                    assignedTo: newItem.assignedTo,
+                    dependencies: newItem.dependencies,
+                    dueDate: newItem.dueDate,
+                    isCompleted: newItem.isCompleted,
+                    location: newItem.location,
+                    task: newItem.task,
+                    urgency: newItem.urgency
+                })
+        )
+            .success(
+                function(objectFromFirebase) {
+                    resolve(objectFromFirebase);    
+      })
+      })
+        }
 
-});
+var updateCompletedStatus = function(newItem){
+        return $q(function(resolve, reject) {
+            $http.put(
+                firebaseURL + "items/" + newItem.Id + ".json",
+                JSON.stringify({
+                    assignedTo: newItem.assignedTo,
+                    dependencies: newItem.dependencies,
+                    dueDate: newItem.dueDate,
+                    isCompleted: newItem.isCompleted,
+                    location: newItem.location,
+                    task: newItem.task,
+                    urgency: newItem.urgency
+                })
+            )
+                .success(
+                function(objectFromFirebase) {
+                    resolve(objectFromFirebase);
+                }
+            );
+        });
+    };
+// All three of the methods need to be returned here: 
+return {updateCompletedStatus:updateCompletedStatus, updateItem:updateItem, getSingleItem:getSingleItem, getItemList: getItemList, deleteItem: deleteItem, postNewItem: postNewItem}; 
+})
+
