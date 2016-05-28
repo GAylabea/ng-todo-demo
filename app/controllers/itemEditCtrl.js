@@ -14,7 +14,7 @@ app.controller("ItemEditCtrl", function($scope, $location, $routeParams, itemSto
 $scope.addNewItem = function() {
     itemStorage.updateItem($routeParams.itemId, $scope.newTask)
       .then(function successCallback(response){
-        console.log(response)
+        // console.log(response)
         $location.url("/items/list");
       }); 
     };

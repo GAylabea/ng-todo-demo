@@ -1,6 +1,6 @@
 // this defines our keys - in case it's left blank, 
 app.controller("ItemNewCtrl", function($scope, $location, itemStorage) {
-   $scope.title="New Item";
+  $scope.title="New Item";
   $scope.submitButtonText = "Add New Item";
   $scope.newTask = {
       assignedTo: "",
@@ -9,7 +9,8 @@ app.controller("ItemNewCtrl", function($scope, $location, itemStorage) {
       isCompleted: false,
       location: "",
       task: "",
-      urgency: ""
+      urgency: "",
+      uid: ""
   };
 
 // instead of doing the traditional promise, we are quickly using this function to add a new item and post the list to the DOM
@@ -17,7 +18,7 @@ app.controller("ItemNewCtrl", function($scope, $location, itemStorage) {
 $scope.addNewItem = function() {
     itemStorage.postNewItem($scope.newTask)
       .then(function successCallback(response){
-        console.log(response)
+        // console.log(response)
         $location.url("/items/list");
       }); 
     };

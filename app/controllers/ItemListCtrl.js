@@ -4,7 +4,7 @@ app.controller("ItemListCtrl", function($scope, $http, $location, itemStorage) {
 // we are saving time and space by doing this factory just once - remember itemStorage? we are passing it thru this controller 
 // / - so no getter is needed (note the old jquery code below)
     itemStorage.getItemList().then(function(itemCollection){
-      console.log("itemCollection from Promise", itemCollection);
+      // console.log("itemCollection from Promise", itemCollection);
       $scope.items = itemCollection;
     })
 
@@ -22,7 +22,7 @@ app.controller("ItemListCtrl", function($scope, $http, $location, itemStorage) {
       $scope.inputChange = function(item) {
         itemStorage.updateCompletedStatus(item)
         .then(function(response){
-            console.log(response);
+            // console.log(response);
         })
       } 
    })   

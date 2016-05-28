@@ -3,11 +3,13 @@
 // we can call this in any controller - they will have access by the words "itemStorage" passed in - since they are returned
 // at the bottom - also, it is named .factory (an angular thing)
 
-app.factory("itemStorage", function($q, $http, firebaseURL) {
+app.factory("itemStorage", function($q, $http, firebaseURL, AuthFactory) {
     var getItemList = function() {
         var items = [];
+         let user = AuthFactory.getUser();
         return $q(function(resolve, reject) {
-            $http.get(firebaseURL + "items.json")
+            // this line is saying, make the request to the json but also order it by userid(uid) and only bring back the ones that are equal to the current uid:
+            $http.get(`${firebaseURL}items.json?orderBy="uid"&equalTo="${user.uid}"`)
                 .success(function(itemObject) {
                     var itemCollection = itemObject;
                     Object.keys(itemCollection).forEach(function(key) {
@@ -34,6 +36,8 @@ app.factory("itemStorage", function($q, $http, firebaseURL) {
 };
 // we are passing newItem thru this function  - note how similar all three are. They each call $http, then post, delete or get
 var postNewItem = function(newItem) {
+    // This line gets the current user data by calling on the function inside AuthFactory called getUser
+    let user = AuthFactory.getUser();
     return $q(function(resolve, reject) {
         $http.post(
                 firebaseURL + "items.json",
@@ -44,7 +48,8 @@ var postNewItem = function(newItem) {
                     isCompleted: newItem.isCompleted,
                     location: newItem.location,
                     task: newItem.task,
-                    urgency: newItem.urgency
+                    urgency: newItem.urgency,
+                    uid: user.uid
                 })
             )
             .success(
@@ -77,7 +82,8 @@ var updateItem = function(itemId, newItem) {
                     isCompleted: newItem.isCompleted,
                     location: newItem.location,
                     task: newItem.task,
-                    urgency: newItem.urgency
+                    urgency: newItem.urgency,
+                    uid: user.uid
                 })
         )
             .success(
@@ -98,7 +104,8 @@ var updateCompletedStatus = function(newItem){
                     isCompleted: newItem.isCompleted,
                     location: newItem.location,
                     task: newItem.task,
-                    urgency: newItem.urgency
+                    urgency: newItem.urgency,
+                    uid: user.uid
                 })
             )
                 .success(

@@ -2,7 +2,7 @@
 app.controller("ItemViewCtrl", function($scope, $routeParams, itemStorage) {
   $scope.items = []; 
   $scope.selectedItem = {};
-  console.log($routeParams.itemId); 
+  // console.log($routeParams.itemId); 
 
   itemStorage.getItemList().then(function(itemCollection){
     console.log("itemCollection from Promise", itemCollection);

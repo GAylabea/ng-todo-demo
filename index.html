@@ -24,10 +24,15 @@
   <script type="test/javascript" src="lib/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="lib/bower_components/angular/angular.min.js"></script>
   <script type="text/javascript" src="lib/bower_components/angular-route/angular-route.min.js"></script>
-  <!-- These are my files - apps first, then factories and controllers - because factories initialize info and controllers manipulate: -->
+  <script type="text/javascript" src="lib/bower_components/firebase/firebase.js"></script>
+  <script type="text/javascript" src="lib/bower_components/angularfire/dist/angularfire.min.js"></script>
+  <!-- These are my files - apps first, then factories and controllers - because factories initialize info and controllers manipulate it-->
   <script type="text/javascript" src="app/app.js"></script>
-  <script type="text/javascript" src="app/factory/itemfactory.js"></script>
-  <script type="text/javascript" src="app/controllers/NavCtrl.js"></script>
+
+  <script type="text/javascript" src="app/factory/Authfactory.js"></script>
+  <script type="text/javascript" src="app/factory/Itemfactory.js"></script>
+
+  <script type="text/javascript" src="app/controllers/LoginCtrl.js"></script>
   <script type="text/javascript" src="app/controllers/ItemListCtrl.js"></script>
   <script type="text/javascript" src="app/controllers/ItemNewCtrl.js"></script>
   <script type="text/javascript" src="app/controllers/ItemViewCtrl.js"></script>
